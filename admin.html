@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Админ панель</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Админ панель</h1>
+    <input type="text" id="name-input" placeholder="Введите имя">
+    <button onclick="saveName()">Сохранить</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    // 🔑 Вставь сюда свой Firebase конфиг
+     const firebaseConfig = {
+    apiKey: "AIzaSyAcyPSOG8cbDqdNR8OG8C6QwmXxIL0Tk_c",
+    authDomain: "nana-1772d.firebaseapp.com",
+    databaseURL: "https://nana-1772d-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "nana-1772d",
+    storageBucket: "nana-1772d.firebasestorage.app",
+    messagingSenderId: "694968540110",
+    appId: "1:694968540110:web:2de0dabd87c2ca3b16699f",
+    measurementId: "G-7XKZZTSWL0"
+  };
+      
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function saveName() {
+      const name = document.getElementById("name-input").value.trim();
+      if (name) {
+        db.ref("latestName").set(name)
+          .then(() => document.getElementById("status").textContent = "Имя сохранено!")
+          .catch(err => alert("Ошибка: " + err));
+      } else {
+        document.getElementById("status").textContent = "Введите имя!";
+      }
+    }
+  </script>
+</body>
+</html>
